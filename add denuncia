@@ -1,0 +1,24 @@
+from operacoesbd import *
+
+conexao = criarConexao('localhost', 'root', 'LeonardoADS26', 'Ouvidoria')
+
+try:
+    motivo_denuncia = str(input('Digite o motivo da denúncia: '))
+except ValueError:
+    print('Erro: Digite apenas texto!')
+
+try:
+    denuncia = str(input('Digite a sua denúncia: '))
+except ValueError:
+    print('Erro: Digite apenas texto!')
+
+
+consulta = 'insert into Ouvidoria (tipo, descricao) values (%s,%s);'
+dados = [motivo_denuncia, denuncia]
+ouvidoria = insertNoBancoDados(conexao, consulta, dados)
+
+print('Denúncia adicionada com sucesso')
+
+
+
+encerrarConexao(conexao)

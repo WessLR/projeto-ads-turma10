@@ -2,7 +2,7 @@ from operacoesbd import *
 
 conexao = criarConexao('localhost', 'root', 'LeonardoADS26', 'Ouvidoria')
 
-consulta = "select * from Ouvidoria;"
+consulta = "select * from Ouvidoria where categoria = 'Reclamação';"
 
 reclamacoes = listarBancoDados(conexao, consulta)
 

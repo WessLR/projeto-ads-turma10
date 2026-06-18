@@ -12,9 +12,9 @@ try:
 except ValueError:
     print('Erro: Digite apenas texto!')
 
-
-consulta = 'insert into Ouvidoria (tipo, descricao) values (%s,%s);'
-dados = [motivo_reclamacao, reclamacao]
+categoria = "Reclamação"
+consulta = 'insert into Ouvidoria (tipo, descricao, categoria) values (%s,%s,%s);'
+dados = [motivo_reclamacao, reclamacao, categoria]
 ouvidoria = insertNoBancoDados(conexao, consulta, dados)
 
 print('Reclamação Adicionada com sucesso')
