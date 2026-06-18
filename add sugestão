@@ -1,0 +1,23 @@
+from operacoesbd import *
+
+conexao = criarConexao('localhost', 'root', 'LeonardoADS26', 'Ouvidoria')
+
+try:
+    motivo_sugestao = str(input('Digite o motivo da sugestão: '))
+except ValueError:
+    print('Erro: Digite apenas texto!')
+
+try:
+    sugestao = str(input('Digite a sua sugestão: '))
+except ValueError:
+    print('Erro: Digite apenas texto!')
+
+consulta = 'insert into Ouvidoria (tipo, descricao) values (%s,%s);'
+dados = [motivo_sugestao, sugestao]
+ouvidoria = insertNoBancoDados(conexao, consulta, dados)
+
+print('Sugestão adicionada com sucesso')
+
+
+
+encerrarConexao(conexao)

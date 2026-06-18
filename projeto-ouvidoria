@@ -1,0 +1,15 @@
+from operacoesbd import *
+
+conexao = criarConexao('localhost', 'root', 'LeonardoADS26', 'Ouvidoria')
+
+while True:
+    print("Opções disponiveis: ")
+    print(" \n 1) Reclamação \n 2) Denúncia \n 3) Sugestão \n 4) Elogio \n 5) Solicitação \n 6) Lista de Reclamações \n 7) Lista de Denúncias \n 8) Lista de Sugestões \n 9) Lista de Elogios \n 10) Lista de Solicitações \n 11) Pesquisar Reclamação \n 12) Atualizar Reclamação \n 13) Remover Reclamação \n 14) Sair")
+
+
+
+
+
+
+
+encerrarConexao(conexao)

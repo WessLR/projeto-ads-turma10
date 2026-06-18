@@ -1,0 +1,24 @@
+from operacoesbd import *
+
+conexao = criarConexao('localhost', 'root', 'LeonardoADS26', 'Ouvidoria')
+
+try:
+    motivo_reclamacao = str(input('Digite o motivo da reclamação: '))
+except ValueError:
+    print('Erro: Digite apenas texto!')
+
+try:
+    reclamacao = str(input('Digite a sua reclamação: '))
+except ValueError:
+    print('Erro: Digite apenas texto!')
+
+
+consulta = 'insert into Ouvidoria (tipo, descricao) values (%s,%s);'
+dados = [motivo_reclamacao, reclamacao]
+ouvidoria = insertNoBancoDados(conexao, consulta, dados)
+
+print('Reclamação Adicionada com sucesso')
+
+
+
+encerrarConexao(conexao)

@@ -1,0 +1,29 @@
+from operacoesbd import *
+
+conexao = criarConexao('localhost', 'root', 'LeonardoADS26', 'Ouvidoria')
+
+
+try:
+    cod_reclamacao = int(input('Digite o código da reclamação que deseja atualizar: '))
+except ValueError:
+    print('Erro: Digite apenas números!')
+try:
+    nova_descricao = str(input('Digite a nova descrição da reclamação: '))
+except ValueError:
+    print('Erro: Digite apenas texto!')
+
+consulta = "update Ouvidoria set descricao = %s where codigo = %s;"
+dados = [nova_descricao, cod_reclamacao]
+
+atualizarBancoDados(conexao, consulta, dados)
+
+
+if consulta > 0:
+    print('Filme atualizado com sucesso!')
+
+else:
+    print('Código informado é invalido')
+
+
+    
+encerrarConexao(conexao)
