@@ -32,8 +32,9 @@ while True:
                      print('Erro: Digite apenas texto!')
 
 
-                consulta = 'insert into Ouvidoria (tipo, descricao, categoria) values (%s,%s,Reclamação);'
-                dados = [motivo_reclamacao, reclamacao]
+                categoria = "Reclamação"
+                consulta = 'insert into Ouvidoria (tipo, descricao, categoria) values (%s,%s,%s);'
+                dados = [motivo_reclamacao, reclamacao, categoria]
                 ouvidoria = insertNoBancoDados(conexao, consulta, dados)
 
                 print('Reclamação Adicionada com sucesso')
@@ -52,6 +53,90 @@ while True:
 
                 else:
                     print('Não existem reclamações a serem exibidas')
+            
+            if opcao == '3':
+                try:
+                    codigo = int(input("Digite o código da reclamação: "))
+                except ValueError:
+                    print('Erro: Digite apenas números!')
 
+                consulta = 'select * from Ouvidoria where codigo = %s and categoria = %s;'
+                dados = [codigo, "Reclamação"]
+
+                reclamacoes = listarBancoDados(conexao, consulta, dados)
+
+                if len(reclamacoes) > 0:
+
+                    print('Reclamação Encontrada')
+                    for item in reclamacoes:
+                        print('\n Título', item[1], '\n Descrição:', item[2], '\n Código:', item[0])
+                else:
+                    print('Reclamação não encontrada')
+
+
+    elif opcao == '2':
+
+        while True:
+
+            print("Opções de Denúncia: ")
+            print(" \n 1) Registrar Denúncia \n 2) Listar Denúncias \n 3) Pesquisar Denúncia \n 4) Atualizar Denúncia \n 5) Remover Denúncia \n 6) Voltar")
+
+            opcao = input("Escolha uma opção: ")
+
+            if opcao == '1':
+                try:
+                    motivo_denuncia = str(input('Digite o motivo da denúncia: '))
+                except ValueError:
+                    print('Erro: Digite apenas texto!')
+
+                try:
+                    denuncia = str(input('Digite a sua denúncia: '))
+                except ValueError:
+                    print('Erro: Digite apenas texto!')
+
+                categoria = "Denuncia"
+                consulta = 'insert into Ouvidoria (tipo, descricao, categoria) values (%s,%s,%s);'
+                dados = [motivo_denuncia, denuncia, categoria]
+                ouvidoria = insertNoBancoDados(conexao, consulta, dados)
+
+                print('Denúncia adicionada com sucesso')
+
+            elif opcao == '2':
+
+                consulta = "select * from Ouvidoria where categoria = 'Denuncia';"
+
+                denuncias = listarBancoDados(conexao, consulta)
+
+                if len(denuncias) > 0:
+
+                    print('Lista de Denúncias')
+                    for item in denuncias:
+                        print('-', item[1], '- Código', item[0])
+
+                else:
+                    print('Não existem denúncias a serem exibidas')
+
+            elif opcao == '3':
+                try:
+                    codigo = int(input("Digite o código da denúncia: "))
+                except ValueError:
+                    print('Erro: Digite apenas números!')
+
+                consulta = 'select * from Ouvidoria where codigo = %s and categoria = %s;'
+                dados = [codigo, "Denuncia"]
+
+                denuncias = listarBancoDados(conexao, consulta, dados)
+
+                if len(denuncias) > 0:
+
+                    print('Denúncia Encontrada')
+                    for item in denuncias:
+                        print('\n Título', item[1], '\n Descrição:', item[2], '\n Código:', item[0])
+                else:
+                    print('Denúncia não encontrada')
+
+    elif opcao == '6':
+        print("Saindo do sistema. Obrigado por utilizar nossos serviços!")
+        break
 
 encerrarConexao(conexao)
