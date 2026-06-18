@@ -11,7 +11,7 @@ except ValueError:
 consulta = "delete from Ouvidoria where codigo = %s and categoria = 'Reclamação';"
 dados = [cod_reclamacao]
 
-deletarBancoDados(conexao, consulta, dados)
+excluirBancoDados(conexao, consulta, dados)
 
 if consulta > 0:
     print('Reclamação removida com sucesso!')
