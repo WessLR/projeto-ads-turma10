@@ -1,8 +1,6 @@
-from operacoesbd import *
+from Ouvidoria import *
 
 conexao = criarConexao('localhost', 'root', 'LeonardoADS26', 'Ouvidoria')
-
-from operacoesbd import insertNoBancoDados, listarBancoDados
 
 
 while True:
@@ -26,97 +24,27 @@ while True:
                 opcao = int(input("Escolha uma opção: "))
             except ValueError:
                 print('Erro: Digite apenas números!')
+                continue
 
             if opcao == 1:
-                
-                
-                motivo_reclamacao = input('Digite o motivo da reclamação: ')
-                reclamacao = input('Explique o seu problema:')
 
-                categoria = "Reclamação"
-                consulta = 'insert into Ouvidoria (tipo, descricao, categoria) values (%s,%s,%s);'
-                dados = [motivo_reclamacao, reclamacao, categoria]
-                cod_reclamacao = insertNoBancoDados(conexao, consulta, dados)
-
-                print('Reclamação Adicionada com sucesso, o código da sua reclamação é:', cod_reclamacao)
+                registrar_reclamacao(conexao)              
 
             elif opcao == 2:
 
-                consulta = "select * from Ouvidoria where categoria = 'Reclamação';"
-
-                reclamacoes = listarBancoDados(conexao, consulta)
-
-                if len(reclamacoes) > 0:
-
-                    print('Lista de Reclamações')
-                    for item in reclamacoes:
-                        print('\n Título:', item[1], '\n Descrição:', item[2], '\n Código:', item[0])
-
-                else:
-                    print('Não existem reclamações a serem exibidas')
+                listar_reclamacoes(conexao)
             
             elif opcao == 3:
-                try:
-                    codigo = int(input("Digite o código da reclamação: "))
-                except ValueError:
-                    print('Erro: Digite apenas números!')
 
-                consulta = 'select * from Ouvidoria where codigo = %s and categoria = %s;'
-                dados = [codigo, "Reclamação"]
-
-                reclamacoes = listarBancoDados(conexao, consulta, dados)
-
-                if len(reclamacoes) > 0:
-
-                    print('Reclamação Encontrada')
-                    for item in reclamacoes:
-                        print('\n Título:', item[1], '\n Descrição:', item[2], '\n Código:', item[0])
-                else:
-                    print('Reclamação não encontrada')
+                pesquisar_reclamacao(conexao)
 
             elif opcao == 4:
                 
-
-                try:
-                    cod_reclamacao = int(input('Digite o código da reclamação que deseja atualizar: '))
-                except ValueError:
-                    print('Erro: Digite apenas números!')
-                    continue
-                try:
-                    nova_descricao = input('Digite a nova descrição da reclamação: ')
-                except ValueError:
-                    print('Erro: Digite apenas texto!')
-
-
-
-                consulta = "update Ouvidoria set descricao = %s where codigo = %s and categoria = 'Reclamação';"
-                dados = [nova_descricao, cod_reclamacao]
-
-                att = atualizarBancoDados(conexao, consulta, dados)
-
-
-                if att > 0:
-                    print('Reclamação atualizada com sucesso!')
-
-                else:
-                    print('Código informado é invalido')
+                atualizar_reclamacao(conexao)
 
             elif opcao == 5:
-                try:
-                    cod_reclamacao = int(input('Digite o código da reclamação que deseja remover: '))
-                except ValueError:
-                    print('Erro: Digite apenas números!')
 
-                consulta = "delete from Ouvidoria where codigo = %s and categoria = 'Reclamação';"
-                dados = [cod_reclamacao]
-
-                removidos = excluirBancoDados(conexao, consulta, dados)
-
-                if removidos > 0:
-                    print('Reclamação removida com sucesso!')
-
-                else:
-                    print('Código informado é invalido')
+                remover_reclamacao(conexao)
             
             
             elif opcao == 6:
@@ -132,13 +60,18 @@ while True:
             print("Opções de Denúncia: ")
             print(" \n 1) Registrar Denúncia \n 2) Listar Denúncias \n 3) Pesquisar Denúncia \n 4) Atualizar Denúncia \n 5) Remover Denúncia \n 6) Voltar")
 
-            opcao = int(input("Escolha uma opção: "))
+            try:
+                opcao = int(input("Escolha uma opção: "))
+            except ValueError:
+                print('Erro: Digite apenas números!')
+                continue
 
             if opcao == 1:
                 try:
-                    motivo_denuncia = str(input('Digite o motivo da denúncia: '))
+                    motivo_denuncia = input('Digite o motivo da denúncia: ')
                 except ValueError:
                     print('Erro: Digite apenas texto!')
+                    continue
                 
                 denuncia = input('Digite a sua denúncia: ')
                
@@ -169,9 +102,11 @@ while True:
                     codigo = int(input("Digite o código da denúncia: "))
                 except ValueError:
                     print('Erro: Digite apenas números!')
+                    continue
 
+                categoria = "Denuncia"
                 consulta = 'select * from Ouvidoria where codigo = %s and categoria = %s;'
-                dados = [codigo, "Denuncia"]
+                dados = [codigo, categoria]
 
                 denuncias = listarBancoDados(conexao, consulta, dados)
 
@@ -182,6 +117,354 @@ while True:
                         print('\n Título:', item[1], '\n Descrição:', item[2], '\n Código:', item[0])
                 else:
                     print('Denúncia não encontrada')
+            
+            elif opcao == 4:
+                try:
+                    cod_denuncia = int(input('Digite o código da denúncia que deseja atualizar: '))
+                except ValueError:
+                    print('Erro: Digite apenas números!')
+                    continue
+                
+                nova_descricao = input('Digite a nova descrição da denúncia: ')
+
+
+                consulta = "update Ouvidoria set descricao = %s where codigo = %s and categoria = 'Denuncia';"
+                dados = [nova_descricao, cod_denuncia]
+
+                att = atualizarBancoDados(conexao, consulta, dados)
+
+
+                if att > 0:
+                    print('Denúncia atualizada com sucesso!')
+
+                else:
+                    print('Código informado é invalido')
+
+            elif opcao == 5:
+                try:
+                    cod_denuncia = int(input('Digite o código da denúncia que deseja remover: '))
+                except ValueError:
+                    print('Erro: Digite apenas números!')
+                    continue
+
+                consulta = "delete from Ouvidoria where codigo = %s and categoria = 'Denuncia';"
+                dados = [cod_denuncia]
+
+                removidos = excluirBancoDados(conexao, consulta, dados)
+
+                if removidos > 0:
+                    print('Denúncia removida com sucesso!')
+
+                else:
+                    print('Código informado é invalido')
+            
+            elif opcao == 6:
+                break
+
+    elif opcao == 3:
+        
+        while True:
+
+            print("Opções de Sugestão: ")
+            print(" \n 1) Registrar Sugestão \n 2) Listar Sugestões \n 3) Pesquisar Sugestão \n 4) Atualizar Sugestão \n 5) Remover Sugestão \n 6) Voltar")
+
+            try:
+                opcao = int(input("Escolha uma opção: "))
+            except ValueError:
+                print('Erro: Digite apenas números!')
+                continue
+
+            if opcao == 1:
+        
+                motivo_sugestao = input('Digite o motivo da sugestão: ')
+                sugestao = input('Digite a sua sugestão: ')
+               
+                categoria = "Sugestão"
+                consulta = 'insert into Ouvidoria (tipo, descricao, categoria) values (%s,%s,%s);'
+                dados = [motivo_sugestao, sugestao, categoria]
+                cod_sugestao = insertNoBancoDados(conexao, consulta, dados)
+
+                print('Sugestão adicionada com sucesso, código da sua sugestão é:', cod_sugestao)
+    
+
+            elif opcao == 2:
+
+                consulta = "select * from Ouvidoria where categoria = 'Sugestão';"
+
+                sugestoes = listarBancoDados(conexao, consulta)
+
+                if len(sugestoes) > 0:
+
+                    print('Lista de Sugestões')
+                    for item in sugestoes:
+                        print('\n Título:', item[1], '\n Descrição:', item[2], '\n Código:', item[0])
+
+                else:
+                    print('Não existem sugestões a serem exibidas')
+
+            elif opcao == 3:
+                try:
+                    codigo = int(input("Digite o código da sugestão: "))
+                except ValueError:
+                    print('Erro: Digite apenas números!')
+                    continue
+
+                categoria = "Sugestão"
+                consulta = 'select * from Ouvidoria where codigo = %s and categoria = %s;'
+                dados = [codigo, categoria]
+
+                sugestoes = listarBancoDados(conexao, consulta, dados)
+
+                if len(sugestoes) > 0:
+
+                    print('Sugestão Encontrada')
+                    for item in sugestoes:
+                        print('\n Título:', item[1], '\n Descrição:', item[2], '\n Código:', item[0])
+                else:
+                    print('Sugestão não encontrada')
+
+            elif opcao == 4:
+                try:
+                    cod_sugestao = int(input('Digite o código da sugestão que deseja atualizar: '))
+                except ValueError:
+                    print('Erro: Digite apenas números!')
+                    continue
+                
+                nova_descricao = input('Digite a nova descrição da sugestão: ')
+
+                consulta = "update Ouvidoria set descricao = %s where codigo = %s and categoria = 'Sugestão';"
+                dados = [nova_descricao, cod_sugestao]
+
+                att = atualizarBancoDados(conexao, consulta, dados)
+
+
+                if att > 0:
+                    print('Sugestão atualizada com sucesso!')
+
+                else:
+                    print('Código informado é invalido')
+
+            elif opcao == 5:
+                try:
+                    cod_sugestao = int(input('Digite o código da sugestão que deseja remover: '))
+                except ValueError:
+                    print('Erro: Digite apenas números!')
+                    continue
+
+                consulta = "delete from Ouvidoria where codigo = %s and categoria = 'Sugestão';"
+                dados = [cod_sugestao]
+
+                removidos = excluirBancoDados(conexao, consulta, dados)
+
+                if removidos > 0:
+                    print('Sugestão removida com sucesso!')
+
+                else:
+                    print('Código informado é invalido')
+
+            elif opcao == 6:
+                break
+
+    elif opcao == 4:
+
+        while True:
+
+            print("Opções de Elogio: ")
+            print(" \n 1) Registrar Elogio \n 2) Listar Elogios \n 3) Pesquisar Elogio \n 4) Atualizar Elogio \n 5) Remover Elogio \n 6) Voltar")
+            try:
+                opcao = int(input("Escolha uma opção: "))
+
+            except ValueError:
+                print('Erro: Digite apenas números!')
+                continue
+
+            
+            if opcao == 1:
+                motivo_elogio = input('Digite o motivo do elogio: ')
+                elogio = input('Digite o seu elogio: ')
+               
+                categoria = "Elogio"
+                consulta = 'insert into Ouvidoria (tipo, descricao, categoria) values (%s,%s,%s);'
+                dados = [motivo_elogio, elogio, categoria]
+                cod_elogio = insertNoBancoDados(conexao, consulta, dados)
+
+                print('Elogio adicionado com sucesso, código do seu elogio é:', cod_elogio)
+
+            elif opcao == 2:
+
+                consulta = "select * from Ouvidoria where categoria = 'Elogio';"
+
+                elogios = listarBancoDados(conexao, consulta)
+
+                if len(elogios) > 0:
+
+                    print('Lista de Elogios')
+                    for item in elogios:
+                        print('\n Título:', item[1], '\n Descrição:', item[2], '\n Código:', item[0])
+
+                else:
+                    print('Não existem elogios a serem exibidos')
+
+            elif opcao == 3:
+                try:
+                    codigo = int(input("Digite o código do elogio: "))
+                except ValueError:
+                    print('Erro: Digite apenas números!')
+                    continue
+
+                categoria = "Elogio"
+                consulta = 'select * from Ouvidoria where codigo = %s and categoria = %s;'
+                dados = [codigo, categoria]
+
+                elogios = listarBancoDados(conexao, consulta, dados)
+
+                if len(elogios) > 0:
+
+                    print('Elogio Encontrado')
+                    for item in elogios:
+                        print('\n Título:', item[1], '\n Descrição:', item[2], '\n Código:', item[0])
+                else:
+                    print('Elogio não encontrado')
+
+            elif opcao == 4:
+                try:
+                    cod_elogio = int(input('Digite o código do elogio que deseja atualizar: '))
+                except ValueError:
+                    print('Erro: Digite apenas números!')
+                    continue
+                
+                nova_descricao = input('Digite a nova descrição do elogio: ')
+
+                consulta = "update Ouvidoria set descricao = %s where codigo = %s and categoria = 'Elogio';"
+                dados = [nova_descricao, cod_elogio]
+                att = atualizarBancoDados(conexao, consulta, dados)
+
+                if att > 0:
+                    print('Elogio atualizado com sucesso!')
+                else:
+                    print('Código informado é invalido')
+                
+            elif opcao == 5:
+                try:
+                    cod_elogio = int(input('Digite o código do elogio que deseja remover: '))
+                except ValueError:
+                    print('Erro: Digite apenas números!')
+                    continue
+
+                consulta = "delete from Ouvidoria where codigo = %s and categoria = 'Elogio';"
+                dados = [cod_elogio]
+
+                removidos = excluirBancoDados(conexao, consulta, dados)
+
+                if removidos > 0:
+                    print('Elogio removido com sucesso!')
+
+                else:
+                    print('Código informado é invalido')
+            
+            elif opcao == 6:
+                break       
+            
+
+    elif opcao == 5:
+        
+        while True:
+            print("Opções de Solicitação: ")
+            print(" \n 1) Registrar Solicitação \n 2) Listar Solicitações \n 3) Pesquisar Solicitação \n 4) Atualizar Solicitação \n 5) Remover Solicitação \n 6) Voltar")
+            
+            try:
+                opcao = int(input("Escolha uma opção: "))
+
+            except ValueError:
+                print('Erro: Digite apenas números!')
+                continue
+
+            if opcao == 1:
+                motivo_solicitacao = input('Digite o motivo da solicitação: ')
+                solicitacao = input('Digite a sua solicitação: ')
+               
+                categoria = "Solicitação"
+                consulta = 'insert into Ouvidoria (tipo, descricao, categoria) values (%s,%s,%s);'
+                dados = [motivo_solicitacao, solicitacao, categoria]
+                cod_solicitacao = insertNoBancoDados(conexao, consulta, dados)
+
+                print('Solicitação adicionada com sucesso, código da sua solicitação é:', cod_solicitacao)
+
+            elif opcao == 2:
+
+                consulta = "select * from Ouvidoria where categoria = 'Solicitação';"
+
+                solicitacoes = listarBancoDados(conexao, consulta)
+
+                if len(solicitacoes) > 0:
+
+                    print('Lista de Solicitações')
+                    for item in solicitacoes:
+                        print('\n Título:', item[1], '\n Descrição:', item[2], '\n Código:', item[0])
+
+                else:
+                    print('Não existem solicitações a serem exibidas')
+
+            elif opcao == 3:
+                try:
+                    codigo = int(input("Digite o código da solicitação: "))
+                except ValueError:
+                    print('Erro: Digite apenas números!')
+                    continue
+
+                categoria = "Solicitação"
+                consulta = 'select * from Ouvidoria where codigo = %s and categoria = %s;'
+                dados = [codigo, categoria]
+
+                solicitacoes = listarBancoDados(conexao, consulta, dados)
+
+                if len(solicitacoes) > 0:
+
+                    print('Solicitação Encontrada')
+                    for item in solicitacoes:
+                        print('\n Título:', item[1], '\n Descrição:', item[2], '\n Código:', item[0])
+                else:
+                    print('Solicitação não encontrada')
+
+            elif opcao == 4:
+                try:
+                    cod_solicitacao = int(input('Digite o código da solicitação que deseja atualizar: '))
+                except ValueError:
+                    print('Erro: Digite apenas números!')
+                    continue
+                
+                nova_descricao = input('Digite a nova descrição da solicitação: ')
+
+                consulta = "update Ouvidoria set descricao = %s where codigo = %s and categoria = 'Solicitação';"
+                dados = [nova_descricao, cod_solicitacao]
+                att = atualizarBancoDados(conexao, consulta, dados)
+
+                if att > 0:
+                    print('Solicitação atualizada com sucesso!')
+                else:
+                    print('Código informado é invalido')
+            
+            elif opcao == 5:
+                try:
+                    cod_solicitacao = int(input('Digite o código da solicitação que deseja remover: '))
+                except ValueError:
+                    print('Erro: Digite apenas números!')
+                    continue
+
+                consulta = "delete from Ouvidoria where codigo = %s and categoria = 'Solicitação';"
+                dados = [cod_solicitacao]
+
+                removidos = excluirBancoDados(conexao, consulta, dados)
+
+                if removidos > 0:
+                    print('Solicitação removida com sucesso!')
+
+                else:
+                    print('Código informado é invalido')
+            
+            elif opcao == 6:
+                break
+
 
     elif opcao == 6:
         print("Saindo do sistema. Obrigado por utilizar nossos serviços!")
