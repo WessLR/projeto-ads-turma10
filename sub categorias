@@ -28,23 +28,23 @@ while True:
 
             if opcao == 1:
 
-                registrar_reclamacao(conexao)              
+                registrar(conexao, "Reclamação")              
 
             elif opcao == 2:
 
-                listar_reclamacoes(conexao)
+                listar(conexao, "Reclamação")
             
             elif opcao == 3:
 
-                pesquisar_reclamacao(conexao)
+                pesquisar(conexao, "Reclamação")
 
             elif opcao == 4:
                 
-                atualizar_reclamacao(conexao)
+                atualizar(conexao, "Reclamação")
 
             elif opcao == 5:
 
-                remover_reclamacao(conexao)
+                remover(conexao, "Reclamação")
             
             
             elif opcao == 6:
@@ -68,23 +68,23 @@ while True:
 
             if opcao == 1:
 
-                registrar_denuncia(conexao)
+                registrar(conexao, "Denúncia")
 
             elif opcao == 2:
 
-                listar_denuncias(conexao)
+                listar(conexao, "Denúncia")
 
             elif opcao == 3:
 
-                pesquisar_denuncia(conexao)
+                pesquisar(conexao, "Denúncia")
             
             elif opcao == 4:
 
-                atualizar_denuncia(conexao)
+                atualizar(conexao, "Denúncia")
 
             elif opcao == 5:
 
-                remover_denuncia(conexao)
+                remover(conexao, "Denúncia")
             
             elif opcao == 6:
                 break
@@ -104,23 +104,23 @@ while True:
 
             if opcao == 1:
         
-                registrar_sugestao(conexao)
+                registrar(conexao, "Sugestão")
 
             elif opcao == 2:
 
-                listar_sugestoes(conexao)
+                listar(conexao, "Sugestão")
 
             elif opcao == 3:
 
-                pesquisar_sugestao(conexao)
+                pesquisar(conexao, "Sugestão")
 
             elif opcao == 4:
 
-                atualizar_sugestao(conexao)
+                atualizar(conexao, "Sugestão")
 
             elif opcao == 5:
 
-                remover_sugestao(conexao)
+                remover(conexao, "Sugestão")
 
             elif opcao == 6:
                 break
@@ -141,24 +141,24 @@ while True:
             
             if opcao == 1:
 
-                registrar_elogio(conexao)
+                registrar(conexao, "Elogio")
 
             elif opcao == 2:
 
-                listar_elogios(conexao)
+                listar(conexao, "Elogio")
 
             elif opcao == 3:
 
-                pesquisar_elogio(conexao)
+                pesquisar(conexao, "Elogio")
 
             elif opcao == 4:
 
-                atualizar_elogio(conexao)
-                
+                atualizar(conexao, "Elogio")
+
             elif opcao == 5:
 
-                remover_elogio(conexao)
-            
+                remover(conexao, "Elogio")
+
             elif opcao == 6:
                 break       
             
@@ -178,24 +178,24 @@ while True:
 
             if opcao == 1:
 
-                registrar_solicitacao(conexao)
+                registrar(conexao, "Solicitação")
 
             elif opcao == 2:
 
-                listar_solicitacoes(conexao)
+                listar(conexao, "Solicitação")
 
             elif opcao == 3:
 
-                pesquisar_solicitacao(conexao)
+                pesquisar(conexao, "Solicitação")
 
             elif opcao == 4:
 
-                atualizar_solicitacao(conexao)
-            
+                atualizar(conexao, "Solicitação")
+
             elif opcao == 5:
 
-                remover_solicitacao(conexao)
-            
+                remover(conexao, "Solicitação")
+
             elif opcao == 6:
                 break
 
