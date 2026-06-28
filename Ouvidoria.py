@@ -17,9 +17,9 @@ def exibir_itens(itens):
 def registrar(conexao, categoria):
     motivo = input(f'Digite o motivo da {categoria}: ')
     descricao = input(f'Digite a sua {categoria}: ')
-    cod = insertNoBancoDados(conexao,
-        'insert into Ouvidoria (tipo, descricao, categoria) values (%s,%s,%s);',
-        [motivo, descricao, categoria])
+    consulta = 'insert into Ouvidoria (tipo, descricao, categoria) values (%s,%s,%s);'
+    dados = [motivo, descricao, categoria]
+    cod = insertNoBancoDados(conexao, consulta, dados)
     print(f'{categoria} adicionada com sucesso! Código: {cod}')
 
 
