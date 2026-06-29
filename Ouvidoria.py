@@ -30,11 +30,11 @@ def listar(conexao, categoria):
 
     if reclamacoes:
 
-        print('Lista de Reclamações')
+        print(f'Lista de {categoria}')
         exibir_itens(reclamacoes)
     
     else:
-        print('Não existem reclamações a serem exibidas')
+        print(f'Não existem {categoria} a serem exibidas')
 
 def pesquisar(conexao, categoria):
     codigo = pedir_codigo(f'Digite o código da {categoria} que deseja pesquisar: ')
@@ -82,3 +82,38 @@ def remover(conexao, categoria):
     else:
         print('Código informado é invalido')
 
+def relatorio(conexao):
+
+    total = listarBancoDados(
+        conexao,
+        "select * from Ouvidoria;"
+    )
+
+    reclamacoes = listarBancoDados(
+        conexao,
+        "select * from Ouvidoria where categoria = 'Reclamação';"
+    )
+
+    sugestoes = listarBancoDados(
+        conexao,
+        "select * from Ouvidoria where categoria = 'Sugestão';"
+    )
+
+    elogios = listarBancoDados(
+        conexao,
+        "select * from Ouvidoria where categoria = 'Elogio';"
+    )
+
+    denuncias = listarBancoDados(
+        conexao,
+        "select * from Ouvidoria where categoria = 'Denúncia';"
+    )
+
+    print("\n===== RELATÓRIOS =====")
+    print("Total de manifestações:", len(total))
+    print("Reclamações:", len(reclamacoes))
+    print("Sugestões:", len(sugestoes))
+    print("Elogios:", len(elogios))
+    print("Denúncias:", len(denuncias))
+
+encerrarConexao(conexao)

@@ -5,7 +5,7 @@ conexao = criarConexao('localhost', 'root', 'LeonardoADS26', 'Ouvidoria')
 
 while True:
     print("Bem vindo ao nosso sistema de Ouvidoria!")
-    print("Digite a opção desejada: \n 1) Reclamações \n 2) Denúncias \n 3) Sugestões \n 4) Elogios \n 5) Solicitações \n 6) Sair")
+    print("Digite a opção desejada: \n 1) Reclamações \n 2) Denúncias \n 3) Sugestões \n 4) Elogios \n 5) Solicitações \n 6) Relatórios \n 7) Sair")
     
     try:
         opcao = int(input("Escolha uma opção: "))
@@ -28,7 +28,7 @@ while True:
 
             if opcao == 1:
 
-                registrar(conexao, "Reclamação")              
+                registrar(conexao, "Reclamação")       #ele vai chamar a função registrar e passar a conexão e a categoria "Reclamação" como argumentos
 
             elif opcao == 2:
 
@@ -198,9 +198,12 @@ while True:
 
             elif opcao == 6:
                 break
-
-
+    
     elif opcao == 6:
+        relatorio(conexao)
+
+
+    elif opcao == 7:
         print("Saindo do sistema. Obrigado por utilizar nossos serviços!")
         break
 
