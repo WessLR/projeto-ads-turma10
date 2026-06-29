@@ -1,6 +1,6 @@
 from Ouvidoria import *
 
-conexao = criarConexao('localhost', 'root', 'LeonardoADS26', 'Ouvidoria')
+conexao = criarConexao('localhost', 'root', '----', 'Ouvidoria')
 
 
 while True:
