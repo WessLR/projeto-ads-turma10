@@ -1,3 +1,11 @@
+#GRUPO:
+#ANDERSON ALMEIDA DA SILVA
+#ISMAEL DA CONCEIÇÃO MOTA
+#LEONARDO RUAN OLIVEIRA SANTOS
+#RAQUEL BARROS LEAL
+
+
+
 from operacoesbd import *
 
 def pedir_codigo(mensagem):                 #Essa função vai pedir para o usuário digitar um código e vai verificar se o que ele digitou é um número inteiro. Se não for, ele vai mostrar uma mensagem de erro e pedir para o usuário digitar novamente. Ele vai continuar pedindo até que o usuário digite um número inteiro válido. Quando isso acontecer, a função vai retornar esse número inteiro.
